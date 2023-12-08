@@ -1,0 +1,19 @@
+{
+  "name": "task-app-page",
+  "version": "1.0.0",
+  "description": "A task management app front-end",
+  "main": "index.js",
+  "scripts": {
+    "test": "start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kajimas/task-app-page.git"
+  },
+  "author": "WLE",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kajimas/task-app-page/issues"
+  },
+  "homepage": "https://github.com/Kajimas/task-app-page#readme"
+}
