@@ -3,7 +3,7 @@
 // This function fetches tasks from the backend and updates the DOM
 function fetchTasks() {
     // Endpoint URL
-    const apiUrl = 'https://task-app-server-ss87.onrender.com/api/tasks';
+    const apiUrl = 'https://task-app-server-ss87.onrender.com';
   
     // Use fetch API to get tasks
     fetch(apiUrl)
