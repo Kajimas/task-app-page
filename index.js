@@ -1,42 +1,103 @@
-"use strict"
+"use strict";
 
-// This function fetches tasks from the backend and updates the DOM
-function fetchTasks() {
-    // Endpoint URL
-    const apiUrl = 'https://task-app-server-ss87.onrender.com';
-  
-    // Use fetch API to get tasks
-    fetch(apiUrl)
-      .then(response => {
-        // Check if the request was successful
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json(); // Parse JSON body of the response
-      })
-      .then(tasks => {
-        // If successful, process the tasks array
-        const tasksContainer = document.getElementById('tasks-container'); // The container where tasks will be displayed
-        
-        // Clear existing tasks
-        tasksContainer.innerHTML = '';
-  
-        // Append each task to the container
-        tasks.forEach(task => {
-          const taskElement = document.createElement('div');
-          taskElement.className = 'task';
-          taskElement.innerHTML = `
-            <h3>${task.title}</h3>
-            <p>${task.description}</p>
-          `;
-          tasksContainer.appendChild(taskElement);
-        });
-      })
-      .catch(error => {
-        console.error('There was an error fetching the tasks:', error);
-      });
+// Endpoint URL
+const apiUrl = "https://task-app-server-ss87.onrender.com/api/tasks";
+
+// Fetch all tasks
+async function fetchTasks() {
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const tasks = await response.json();
+    displayTasks(tasks);
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
   }
-  
-  // Call the function when the window loads
-  window.onload = fetchTasks;
-  
+}
+
+// Create a new task
+async function createTask(task) {
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(task),
+    });
+    const data = await response.json();
+    console.log("Success:", data);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+// Update a task
+async function updateTask(id, task) {
+  try {
+    const response = await fetch(`${apiUrl}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(task),
+    });
+    const data = await response.json();
+    console.log("Success:", data);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+// Delete a task
+async function deleteTask(id) {
+  try {
+    const response = await fetch(`${apiUrl}/${id}`, {
+      method: "DELETE",
+    });
+    const data = await response.json();
+    console.log("Success:", data);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+// Display tasks in the DOM
+function displayTasks(tasks) {
+  const tasksContainer = document.getElementById("tasks-container");
+  tasksContainer.innerHTML = "";
+  tasks.forEach((task) => {
+    const taskElement = document.createElement("div");
+    taskElement.className = "task";
+    taskElement.innerHTML = `
+      <h3>${task.title}</h3>
+      <p>${task.description}</p>
+    `;
+    tasksContainer.appendChild(taskElement);
+  });
+}
+
+// Call the fetchTasks function when the window loads
+window.addEventListener("load", function () {
+  fetchTasks();
+});
+
+document
+  .getElementById("submit-button")
+  .addEventListener("click", function (event) {
+    event.preventDefault(); // prevent the form from being submitted
+
+    const taskTitle = document.getElementById("task-title-input").value;
+
+    if (!taskTitle.trim()) {
+      alert("Please enter a task.");
+    } else {
+      const task = {
+        title: taskTitle,
+        description: "", // add description here if needed
+      };
+      createTask(task);
+    }
+  });
