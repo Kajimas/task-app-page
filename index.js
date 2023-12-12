@@ -77,12 +77,12 @@ async function deleteTask(id) {
 
 // Display tasks in the DOM
 function displayTasks(tasks) {
-  const taskList = document.getElementById('task-list');
-  taskList.innerHTML = ''; // clear the container
+  const taskList = document.getElementById("tasks-list");
+  taskList.innerHTML = ""; // clear the container
 
   for (const task of tasks) {
-    const taskElement = document.createElement('div');
-    taskElement.className = 'simple-task';
+    const taskElement = document.createElement("div");
+    taskElement.className = "simple-task";
     taskElement.textContent = task.title; // or task.description if you want to display the description
     taskList.appendChild(taskElement);
   }
@@ -115,4 +115,3 @@ document
         .catch((error) => console.error("Error:", error));
     }
   });
-
