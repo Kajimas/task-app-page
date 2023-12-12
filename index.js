@@ -27,6 +27,9 @@ async function createTask(task) {
       },
       body: JSON.stringify(task),
     });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const data = await response.json();
     console.log("Success:", data);
   } catch (error) {
@@ -44,6 +47,9 @@ async function updateTask(id, task) {
       },
       body: JSON.stringify(task),
     });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const data = await response.json();
     console.log("Success:", data);
   } catch (error) {
@@ -57,6 +63,9 @@ async function deleteTask(id) {
     const response = await fetch(`${apiUrl}/${id}`, {
       method: "DELETE",
     });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const data = await response.json();
     console.log("Success:", data);
   } catch (error) {
@@ -81,7 +90,7 @@ function displayTasks(tasks) {
 
 // Call the fetchTasks function when the window loads
 window.addEventListener("load", function () {
-  fetchTasks();
+  fetchTasks().catch(error => console.error('Error fetching tasks:', error));
 });
 
 document
