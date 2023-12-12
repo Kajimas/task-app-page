@@ -27,11 +27,13 @@ async function createTask(task) {
       },
       body: JSON.stringify(task),
     });
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const data = await response.json();
-    console.log("Success:", data);
+
+    // Clear the input field after the task has been created
+    document.getElementById("task-title-input").value = "";
   } catch (error) {
     console.error("Error:", error);
   }
@@ -90,7 +92,7 @@ function displayTasks(tasks) {
 
 // Call the fetchTasks function when the window loads
 window.addEventListener("load", function () {
-  fetchTasks().catch(error => console.error('Error fetching tasks:', error));
+  fetchTasks().catch((error) => console.error("Error fetching tasks:", error));
 });
 
 document
@@ -98,7 +100,7 @@ document
   .addEventListener("click", function (event) {
     event.preventDefault(); // prevent the form from being submitted
 
-    const taskTitle = document.getElementById("task-title-input").value;
+    const taskTitle = document.getElementById("task-input").value;
 
     if (!taskTitle.trim()) {
       alert("Please enter a task.");
@@ -107,6 +109,12 @@ document
         title: taskTitle,
         description: "", // add description here if needed
       };
-      createTask(task);
+      createTask(task)
+        .then(() => {
+          document.getElementById("task-input").value = ""; // clear the input field
+          return fetchTasks(); // re-fetch tasks
+        })
+        .catch((error) => console.error("Error:", error));
     }
   });
+
