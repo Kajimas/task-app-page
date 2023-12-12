@@ -77,8 +77,8 @@ async function deleteTask(id) {
 
 // Display tasks in the DOM
 function displayTasks(tasks) {
-  const taskContainer = document.getElementById('task-list');
-  taskContainer.innerHTML = ''; // clear the container
+  const taskList = document.getElementById('task-list');
+  taskList.innerHTML = ''; // clear the container
 
   for (const task of tasks) {
     const taskElement = document.createElement('div');
