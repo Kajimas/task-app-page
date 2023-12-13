@@ -98,7 +98,7 @@ document
   .addEventListener("click", function (event) {
     event.preventDefault(); // prevent the form from being submitted
 
-    const taskTitle = document.getElementById("task-input").value;
+    const taskTitle = document.getElementById("task-title-input").value;
 
     if (!taskTitle.trim()) {
       alert("Please enter a task.");
