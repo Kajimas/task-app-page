@@ -109,7 +109,7 @@ document
       };
       createTask(task)
         .then(() => {
-          document.getElementById("task-input").value = ""; // clear the input field
+          document.getElementById("task-title-input").value = ""; // clear the input field
           return fetchTasks(); // re-fetch tasks
         })
         .catch((error) => console.error("Error:", error));
