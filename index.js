@@ -66,6 +66,7 @@ async function deleteTask(id) {
       method: "DELETE",
     });
     console.log(`Response: ${response}`);
+    console.log(`Response status: ${response.status}`)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -81,6 +82,7 @@ function displayTasks(tasks) {
   const taskList = document.getElementById("tasks-list");
   taskList.innerHTML = ""; // clear the container
   for (const task of tasks) {
+    console.log(task);
     const taskElement = document.createElement("div");
     taskElement.className = "simple-task";
     taskElement.textContent = task.title; // or task.description if you want to display the description
