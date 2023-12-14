@@ -79,11 +79,23 @@ async function deleteTask(id) {
 function displayTasks(tasks) {
   const taskList = document.getElementById("tasks-list");
   taskList.innerHTML = ""; // clear the container
-
   for (const task of tasks) {
     const taskElement = document.createElement("div");
     taskElement.className = "simple-task";
     taskElement.textContent = task.title; // or task.description if you want to display the description
+
+    // Create a delete button
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", function () {
+      deleteTask(task.id)
+        .then(fetchTasks) // re-fetch tasks after deleting
+        .catch((error) => console.error("Error:", error));
+    });
+
+    // Append the delete button to the task element
+    taskElement.appendChild(deleteButton);
+
     taskList.appendChild(taskElement);
   }
 }
