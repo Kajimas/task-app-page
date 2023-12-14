@@ -88,6 +88,7 @@ function displayTasks(tasks) {
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
     deleteButton.addEventListener("click", function () {
+      console.log(`Deleting task ID: ${task.id}`);
       deleteTask(task.id)
         .then(fetchTasks) // re-fetch tasks after deleting
         .catch((error) => console.error("Error:", error));
