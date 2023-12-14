@@ -65,6 +65,7 @@ async function deleteTask(id) {
     const response = await fetch(`${apiUrl}/${id}`, {
       method: "DELETE",
     });
+    console.log(`Response: ${response}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
