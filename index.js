@@ -123,6 +123,7 @@ document
       const task = {
         title: taskTitle,
         description: "", // add description here if needed
+        completed: false,
       };
       createTask(task)
         .then(() => {
