@@ -20,6 +20,7 @@ async function fetchTasks() {
 // Create a new task
 async function createTask(task) {
   try {
+    console.log('Creating task:', task);
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
