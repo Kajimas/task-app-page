@@ -96,10 +96,29 @@ function displayTasks(tasks) {
   taskList.innerHTML = ""; // clear the container
   for (const task of tasks) {
     console.log(task);
-    const taskElement = document.createElement("div");
-    taskElement.className = "simple-task";
-    taskElement.textContent = task.title; // or task.description if you want to display the description
 
+    const listItem = document.createElement("li");
+
+    const taskName = document.createElement("span");
+    taskName.className = "simple-task";
+    taskName.addEventListener("click", function () {
+      // When the task name is clicked, turn it into an editable input field
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = task.title;
+      input.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          // When the user presses enter, update the task name on the server
+          updateTask(task._id, { title: input.value })
+            .then(fetchTasks) // re-fetch tasks after updating
+            .catch((error) => console.error("Error:", error));
+        }
+      });
+      listItem.replaceChild(input, taskName); // Replace the task name with the input field
+      input.focus(); // Focus the input field
+    });
+    listItem.appendChild(taskName);
+    
     // Create a delete button
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
@@ -111,9 +130,9 @@ function displayTasks(tasks) {
     });
 
     // Append the delete button to the task element
-    taskElement.appendChild(deleteButton);
+    listItem.appendChild(deleteButton);
 
-    taskList.appendChild(taskElement);
+    taskList.appendChild(listItem);
   }
 }
 
