@@ -8,7 +8,10 @@ async function fetchTasks() {
   try {
     const response = await fetch(apiUrl);
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
+      throw new Error(
+        `HTTP error! status: ${response.status}, message: ${data.message}`
+      );
     }
     const tasks = await response.json();
     displayTasks(tasks);
@@ -20,7 +23,7 @@ async function fetchTasks() {
 // Create a new task
 async function createTask(task) {
   try {
-    console.log('Creating task:', task);
+    console.log("Creating task:", task);
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -30,7 +33,10 @@ async function createTask(task) {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
+      throw new Error(
+        `HTTP error! status: ${response.status}, message: ${data.message}`
+      );
     }
 
     // Clear the input field after the task has been created
@@ -51,7 +57,10 @@ async function updateTask(id, task) {
       body: JSON.stringify(task),
     });
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
+      throw new Error(
+        `HTTP error! status: ${response.status}, message: ${data.message}`
+      );
     }
     const data = await response.json();
     console.log("Success:", data);
@@ -67,9 +76,12 @@ async function deleteTask(id) {
       method: "DELETE",
     });
     console.log(`Response: ${response}`);
-    console.log(`Response status: ${response.status}`)
+    console.log(`Response status: ${response.status}`);
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
+      throw new Error(
+        `HTTP error! status: ${response.status}, message: ${data.message}`
+      );
     }
     const data = await response.json();
     console.log("Success:", data);
